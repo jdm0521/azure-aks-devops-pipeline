@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  ACR_NAME: aksdevopsjdm0521
+  ACR_NAME: aksdevopsacrjdm0521
   RESOURCE_GROUP: rg-aks-devops
   AKS_CLUSTER: aks-devops-cluster
   IMAGE_NAME: aks-api
