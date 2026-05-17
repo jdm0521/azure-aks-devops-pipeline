@@ -23,6 +23,14 @@ Azure Kubernetes Service (AKS)
         ↓
 Kubernetes Deployment (Pods)
         ↓
+Secrets Store CSI Driver
+        ↓
+Azure Key Vault
+        ↓
+Managed Identity Authentication
+        ↓
+Azure Monitor + Log Analytics
+        ↓
 LoadBalancer Service
         ↓
 Public API Endpoint
@@ -114,12 +122,36 @@ GET /health
 
 ---
 
+
 ## 🔐 Security
 
-* AKS uses **system-assigned managed identity**
-* Secure image pulls from ACR using **RBAC (AcrPull role)**
-* No credentials stored in code
+* AKS uses Azure Managed Identities for secure Azure service authentication
+* Secrets are securely stored in Azure Key Vault
+* Kubernetes retrieves secrets dynamically using the Secrets Store CSI Driver
+* No credentials or secrets are stored in application code or Kubernetes manifests
+* Secure image pulls from Azure Container Registry (ACR) using RBAC (AcrPull role)
 
+
+---
+
+---
+## 📊 Monitoring & Observability
+
+Azure Monitor and Log Analytics were integrated with AKS to provide:
+
+* Container and pod telemetry
+* CPU and memory metrics
+* Kubernetes event monitoring
+* Centralized log collection
+* Operational visibility through Azure Monitor Insights and KQL queries
+
+Example KQL query:
+
+```kql
+ContainerLog
+| where ContainerName contains "aks-api"
+| limit 50
+```
 ---
 
 ## 🧠 Key Learnings
@@ -127,8 +159,11 @@ GET /health
 * Implemented Infrastructure as Code using Terraform
 * Built CI/CD pipelines using GitHub Actions
 * Deployed and managed containerized workloads in Kubernetes
-* Debugged real-world issues with authentication, image pulls, and deployments
-* Understood Kubernetes rollout behavior and image versioning
+* Integrated Azure Key Vault with AKS using Managed Identities and the Secrets Store CSI Driver
+* Implemented centralized monitoring and observability using Azure Monitor and Log Analytics
+* Debugged real-world Kubernetes issues involving authentication, image pulls, secret injection, and infrastructure recreation
+* Understood Kubernetes rollout behavior, workload security, and cloud-native operational patterns
+
 
 ---
 
@@ -143,10 +178,11 @@ GET /health
 
 ## 🚀 Future Improvements
 
-* 🔐 Azure Key Vault integration for secrets
-* 📈 Horizontal Pod Autoscaler (HPA)
-* 🌐 Ingress controller + custom domain
-* 📊 Monitoring with Azure Monitor
+📈 Horizontal Pod Autoscaler (HPA)
+🌐 Ingress controller + custom domain
+🚨 Alerting and notification rules
+📊 Grafana dashboards and advanced observability
+🔄 GitOps deployment workflow
 
 ---
 
