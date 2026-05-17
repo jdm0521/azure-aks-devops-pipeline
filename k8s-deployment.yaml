@@ -17,3 +17,16 @@ spec:
         image: aksdevopsacrjdm0521.azurecr.io/aks-api:latest
         ports:
         - containerPort: 8000
+
+        volumeMounts:
+        - name: secrets-store
+          mountPath: "/mnt/secrets"
+          readOnly: true
+
+      volumes:
+      - name: secrets-store
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kv-secrets"
